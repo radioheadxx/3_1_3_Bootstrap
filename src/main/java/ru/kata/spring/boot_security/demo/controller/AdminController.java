@@ -40,7 +40,9 @@ public class AdminController {
 
     @PostMapping("/update")
     public String updateUser(@ModelAttribute("user") User user, @RequestParam(value = "role") String role) {
-        user.setRoles(userService.findRolesByName(role));
+        if(user.getRoles() == null) {
+            user.setRoles(userService.findRolesByName(role));
+        }
         userService.update(user);
         return "redirect:/admin";
     }
